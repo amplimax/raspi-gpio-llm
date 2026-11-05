@@ -24,7 +24,9 @@ def build(edition):
     paths += sorted((ROOT / 'voice').glob('*.py'))
     paths += sorted((ROOT / 'tests').glob('test_*.py'))
     paths += [ROOT / p for p in ['voice/run.sh', 'voice/requirements.txt', 'Cargo.toml', 'Cargo.lock',
-                                'install-autonomous-service.py', 'scripts/service_support.py']]
+                                'install-autonomous-service.py', 'scripts/service_support.py',
+                                'scripts/prepara-raspberry.py', 'voice/requirements-lock.txt',
+                                'docs/ambiente-collaudato.json']]
     sources = {}
     fingerprint = sha256()
     for path in paths:

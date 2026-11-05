@@ -34,6 +34,7 @@ non scrive codice, non esegue shell e non accede ai GPIO.
   nel browser: funziona offline, senza server. Su GitHub il file viene mostrato
   come sorgente; usa **Download raw file** per consultarlo localmente.
 - [Uso autonomo, configurazione e cablaggio](docs/ascolto-autonomo.md).
+- [Ricostruzione da clone pulito e ambiente collaudato](docs/ripristino.md).
 - [Diagnostica e modalità vocale manuale](voice/README.md).
 - [Sviluppo, controlli e aggiornamento del repository](CONTRIBUTING.md).
 
@@ -72,19 +73,10 @@ API locale su `127.0.0.1:11434`. La preparazione richiede Internet; il normale
 funzionamento successivo è locale.
 
 ```bash
+ollama pull qwen3:0.6b
 git clone https://github.com/amplimax/raspi-gpio-llm.git
 cd raspi-gpio-llm
-python3 -m venv .venv-voice
-.venv-voice/bin/python -m pip install -r voice/requirements.txt
-mkdir -p models
-curl --fail --location --output models/vosk-model-small-it-0.22.zip \
-  https://alphacephei.com/vosk/models/vosk-model-small-it-0.22.zip
-python3 -m zipfile -e models/vosk-model-small-it-0.22.zip models
-ollama pull qwen3:0.6b
-cargo test --locked
-cargo build --release --locked
-python3 -m unittest discover -s voice -p 'test_*.py' -v
-python3 -m unittest discover -s tests -p 'test_*.py' -v
+python3 scripts/prepara-raspberry.py
 arecord -l
 python3 install-autonomous-service.py --print-unit
 python3 install-autonomous-service.py --install
@@ -94,6 +86,9 @@ Il dispositivo predefinito del collaudo è `plughw:CARD=Talk,DEV=0`. Se il tuo
 microfono ha un nome differente, imposta `GPIO_VOICE_DEVICE` prima dell'installer.
 L'installer si esegue come utente del progetto e chiede sudo nel terminale per
 installare la unit. Non occorre mantenere aperto SSH per usare la voce.
+La preparazione verifica il digest LLM, usa le dipendenze Python bloccate e
+controlla il checksum del modello Vosk. Versioni e impronte sono registrate in
+`docs/ambiente-collaudato.json`; i dettagli sono nella guida al ripristino.
 
 ## CLI e controllo del servizio
 
@@ -138,6 +133,7 @@ di installazione o su una nuova macchina.
 | `tests/` | Contratti dell'installer e della configurazione systemd |
 | `install-autonomous-service.py` | Installer del servizio persistente |
 | `scripts/service_support.py` | Helper attivi dell'installer |
+| `scripts/prepara-raspberry.py` | Preparazione e test di un clone pulito ARM64 |
 | `scripts/manuale/` | Testi, stile e interazioni del manuale |
 | `scripts/genera-manuale.py` | Generatore HTML offline, solo libreria standard |
 | `scripts/verifica-manuale.py` | Controllo browser opzionale con Playwright |

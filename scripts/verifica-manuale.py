@@ -31,7 +31,7 @@ with sync_playwright() as p:
     report['invalid_source_links'] = page.evaluate("""() => [...document.querySelectorAll('a.source-link')].filter(a=>!sourceData[a.dataset.file] || +a.dataset.line<1 || +a.dataset.line>sourceData[a.dataset.file].lines).map(a=>a.outerHTML)""")
     assert not report['invalid_source_links']
     report['source_files'] = page.locator('#source-select option').count()
-    assert report['source_files'] == 28
+    assert report['source_files'] == 31
     embedded = page.evaluate('sourceData')
     for filename, source in embedded.items():
         if filename.startswith('deploy/'):

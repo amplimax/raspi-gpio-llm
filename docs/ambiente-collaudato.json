@@ -1,0 +1,23 @@
+{
+  "verified_on": "2026-11-05",
+  "hardware": "Raspberry Pi 4 Model B",
+  "architecture": "aarch64",
+  "os": "Debian GNU/Linux 13.7 (trixie)",
+  "python": "3.13.5",
+  "rustc": "1.99.1",
+  "cargo": "1.99.1",
+  "ollama": "0.40.13",
+  "llm": {
+    "name": "qwen3:0.6b",
+    "digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435"
+  },
+  "stt": {
+    "library": "vosk==0.3.45",
+    "name": "vosk-model-small-it-0.22",
+    "url": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.22.zip",
+    "archive_sha256": "9ec65e75861d1c6c2e457cccd932705340dcdf233f5b239f00733b4de0bf3267"
+  },
+  "python_lock": "voice/requirements-lock.txt",
+  "rust_lock": "Cargo.lock",
+  "notes": "Reference environment, not an OS image. Models and system tools are installed separately; the preparation script verifies the LLM digest and the STT download checksum."
+}

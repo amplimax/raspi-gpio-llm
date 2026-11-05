@@ -44,6 +44,10 @@ Screenshot temporanei e report locali non sono versionati. GitHub Actions esegue
 test Rust/Python, compilazione e controllo del manuale ad ogni push su main e PR.
 Dependabot propone aggiornamenti mensili; non è abilitato il merge automatico.
 Una modifica di Vosk o modello va collaudata anche sull'hardware ARM64.
+Allinea `voice/requirements-lock.txt` quando cambia il runtime e aggiorna
+`docs/ambiente-collaudato.json` dopo un nuovo collaudo. Prova periodicamente
+`scripts/prepara-raspberry.py` da un clone pulito; la procedura è in
+[docs/ripristino.md](docs/ripristino.md).
 
 ## Cosa includere nei commit
 
