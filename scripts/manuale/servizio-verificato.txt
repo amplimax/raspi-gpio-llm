@@ -1,0 +1,32 @@
+# Snapshot della unit installata, letto sul Raspberry il 5 novembre 2026.
+[Unit]
+Description=GPIO LLM autonomo: warmup, ASCOLTA e CLI
+Wants=ollama.service
+After=sound.target ollama.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+NotifyAccess=main
+User=max
+WorkingDirectory=/home/max/gpio-llm
+RuntimeDirectory=gpio-llm
+RuntimeDirectoryMode=0700
+UMask=0077
+Environment="GPIO_LLM_URL=http://127.0.0.1:11434/v1/chat/completions"
+Environment="RUST_LOG=info"
+Environment="GPIO_LLM_SOCKET=/run/gpio-llm/control.sock"
+ExecStart="/home/max/gpio-llm/target/release/gpio-llm" --daemon
+TimeoutStartSec=600
+TimeoutStopSec=15
+KillMode=control-group
+SuccessExitStatus=130
+Restart=on-failure
+RestartSec=5
+StandardInput=null
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gpio-llm
+
+[Install]
+WantedBy=multi-user.target

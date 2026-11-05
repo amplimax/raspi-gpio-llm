@@ -1,0 +1,61 @@
+Use case: infographic-diagram
+Asset type: PNG architecture slide for a technical PoC presentation, landscape 16:9, ideally 2560x1440 or higher.
+Create one polished, precise architecture diagram in Italian for the CURRENT real Raspberry-GPIO-LLM PoC. Crisp presentation typography, abundant whitespace, flat vector-like blocks, simple line icons, carefully routed directional arrows. Dark midnight blue background, white text, teal voice path, blue Rust coordinator, violet local LLM, amber actuator, green status LED. Restrained professional engineering aesthetic, no decorative pseudo-code, no photographic board, no watermarks. Make every label readable when projected.
+
+Exact title: "Dalla voce al GPIO"
+Exact subtitle: "PoC autonoma su Raspberry Pi · riconoscimento, interpretazione e controllo locali"
+Use a clear container labeled "Raspberry Pi 4 Model B · elaborazione interamente locale" around ALL processing and GPIO output blocks. A microphone icon at the left feeds the voice worker; a terminal icon lower left feeds the Rust coordinator independently. All models run inside this Raspberry container. Do not imply a cloud service. Do not use qwen3:1.7b: the active LLM is qwen3:0.6b.
+
+Layout: left-to-right main command flow, with a large central Rust coordinator and a local LLM card underneath it. Two output cards stacked at the right. A compact boot strip and state legend at the bottom, clearly separated from data flow.
+
+LEFT INPUTS:
+1. Small microphone input label "Microfono USB" and "KLIM Talk". Arrow into a teal block titled "Voce · Python + Vosk".
+Inside that block, exact readable lines:
+"Modello: vosk-model-small-it-0.22"
+"ASCOLTA → apertura sessione"
+"Audio → testo italiano"
+"Numeri e decimali normalizzati"
+Small secondary label "ALSA · PCM mono 16 kHz".
+The voice block sends one rightward arrow labeled "testo + eventi" to the Rust coordinator.
+2. Lower-left smaller block titled "CLI testuale" with lines "Interfaccia invariata" and "Comandi + esiti". A bidirectional connection to Rust, labeled "socket Unix locale". The CLI must bypass the voice block; it is an independent input into the same Rust coordinator.
+
+CENTRAL LARGE BLOCK, BLUE:
+Title "Coordinatore · Rust"
+Subtitle "gpio-llm --daemon"
+Inside it, a clear vertical ordered sequence:
+"1  Ricezione e coda dei comandi"
+"2  Interpretazione tramite LLM"
+"3  Controllo numeri vocali + validazione"
+"4  Conferma di stato → attuazione"
+Small text at bottom: "Un solo backend controlla i GPIO".
+Numbers are constrained from the transcript only in the voice path; don't imply the CLI is normalized by Vosk. Validated command goes to actuator, status and outcome events go to status LED. The LLM MUST NOT have any direct arrow to GPIO.
+
+LOCAL LLM CARD, VIOLET, BELOW RUST:
+Title "Ollama · Qwen3 0.6B"
+Exact technical model tag "qwen3:0.6b"
+Function "Interpreta l'azione e propone un comando JSON"
+Small label "localhost:11434 · thinking disattivato"
+Two clean directional arrows connecting this card ONLY to Rust: from Rust down to Ollama labeled "testo"; from Ollama up to Rust labeled "JSON".
+Near the JSON return, a compact example text, exactly:
+"action: blink · pin: 17 · interval_s: 0.5"
+Do not make the model responsible for GPIO policy or electrical actuation.
+
+RIGHT OUTPUTS, TWO DISTINCT BLOCKS:
+Top amber output title "Attuazione · LED"
+Exact lines "BCM17 · pin fisico 11" and "Accendi · spegni · lampeggia · ferma".
+One arrow from Rust to this actuator block labeled "rppal · GPIO".
+Bottom green output title "Stato e notifiche · LED"
+Exact lines "BCM23 · pin fisico 16" and "Ascolto · pronto · esito".
+A separate arrow from Rust to this block labeled "stato + esito". No arrow between the two LEDs. No LED state feedback sensor is present.
+
+BOTTOM BOOT STRIP:
+Label "Avvio autonomo · systemd"
+Sequence "Accensione → warmup LLM → Vosk + microfono → 5 lampeggi → pronto".
+
+BOTTOM STATE LEGEND, concise readable horizontal legend:
+"ASCOLTA: LED stato fisso durante il comando"
+"Valido: 5 lampeggi rapidi, poi attuazione"
+"Rifiutato: 2 lampeggi rapidi, poi spento"
+Tiny footer "Audio e inferenza locali · CLI e microfono disponibili dopo il warmup".
+
+Accuracy constraints: During processing the status LED is off; solid light only during capture, then five rapid flashes finish BEFORE hardware actuation. Rejected commands cause no actuation and two rapid flashes. Keep actuator and notification LEDs completely separate. All text Italian, exact model names and pin numbers. Clean arrow topology, no crossing lines, no extraneous blocks, no SSH/network dependency for everyday voice use. Prioritize clarity over including additional technical detail.

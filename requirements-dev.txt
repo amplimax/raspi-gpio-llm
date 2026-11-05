@@ -1,0 +1,2 @@
+# Optional: only for checking the offline HTML manual in a real browser.
+playwright==1.62.0

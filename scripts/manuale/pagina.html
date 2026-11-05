@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Manuale tecnico di gpio-llm: architettura, Rust, Python, Vosk, Ollama, Linux e GPIO. Tutto consultabile offline, sorgenti inclusi.">
+<title>gpio-llm — Dentro il software</title>
+<style>@@STYLE@@</style>
+</head>
+<body>
+<a class="skip" href="#introduzione">Vai al contenuto</a>
+<div id="reading-progress" aria-hidden="true"></div>
+<aside class="sidebar" id="sidebar" aria-label="Indice del manuale">
+  <a class="brand" href="#inizio"><span class="brand-mark">g<span>↗</span></span><span>gpio-llm<small>MANUALE DEL SOFTWARE</small></span></a>
+  <button id="search-open" class="search-trigger" type="button"><span>Cerca nel manuale e nel codice</span><kbd>Ctrl K</kbd></button>
+  <nav>@@NAV@@</nav>
+  <div class="sidebar-bottom"><span class="live-dot"></span> Edizione verificata · 05.11.2026<small>Locale · nessuna dipendenza web</small></div>
+</aside>
+<div class="mobile-bar"><a href="#inizio">gpio-llm / manuale</a><button id="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Indice</button><button id="mobile-search" type="button">Cerca</button></div>
+<main id="inizio">
+<header class="hero">
+  <div class="eyebrow">RASPBERRY PI × LINGUAGGIO NATURALE</div>
+  <h1>Dentro il<br><em>software.</em></h1>
+  <p class="hero-lede">Dalla prima frase al singolo GPIO.<br>Una guida per capire il sistema, leggere il codice e modificarlo con cognizione.</p>
+  <div class="hero-tags"><span>Rust</span><span>Python</span><span>Linux</span><span>Vosk + Qwen3</span><span>100% locale</span></div>
+  <div class="hero-actions"><a class="primary" href="#introduzione">Inizia la lettura <span>↓</span></a><a class="secondary" href="#codice">Esplora i sorgenti ↗</a><button class="secondary" id="print" type="button">Stampa / PDF</button></div>
+  <div class="hero-metrics"><div><strong>2</strong><span>ingressi: voce e CLI</span></div><div><strong>2</strong><span>LED con ruoli distinti</span></div><div><strong>@@SOURCE_COUNT@@</strong><span>file consultabili nel manuale</span></div><div><strong>@@LINE_COUNT@@</strong><span>righe nello snapshot</span></div></div>
+</header>
+<article>@@BODY@@</article>
+<footer class="site-footer"><strong>gpio-llm · conoscere il percorso prima di cambiare il codice.</strong><p>Manuale basato sui sorgenti e sulla configurazione verificata il 5 novembre 2026. Edizione: @@BUILD_DATE@@. Le misure di collaudo sono osservazioni della sessione, non garanzie temporali.</p><p>Impronta aggregata dello snapshot dei sorgenti <code class="fingerprint">@@FINGERPRINT@@</code></p><a href="#inizio">Torna all’inizio ↑</a></footer>
+</main>
+<dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="dialog-top"><h2 id="search-title">Trova un concetto o una funzione</h2><button data-close="search-dialog" type="button" aria-label="Chiudi ricerca">×</button></div><label class="sr-only" for="search-input">Testo da cercare</label><input id="search-input" type="search" placeholder="Prova: Mutex, normalize_command, timeout…" autocomplete="off"><div id="search-results" aria-live="polite"></div><p class="dialog-hint">Cerca nei capitoli e nei file incorporati. Esc per chiudere.</p></dialog>
+<dialog id="source-dialog" class="source-dialog" aria-labelledby="source-title"><div class="dialog-top"><h2 id="source-title">Esplora il codice</h2><button data-close="source-dialog" type="button" aria-label="Chiudi codice">×</button></div><div class="source-toolbar"><label for="source-select">File</label><select id="source-select"></select><label for="source-find" class="sr-only">Cerca nel file</label><input id="source-find" type="search" placeholder="Cerca nel file…"><button id="source-next" type="button">Risultato successivo ↓</button><button id="source-copy" type="button">Copia file</button></div><div id="source-meta"></div><div id="source-code" tabindex="0" aria-label="Codice sorgente con numeri di riga"></div><p class="dialog-hint">Snapshot esatto del progetto. I numeri di riga e le impronte sono calcolati dal generatore. La visualizzazione non esegue codice.</p></dialog>
+<dialog id="figure-dialog" class="figure-dialog" aria-label="Figura ingrandita"><button data-close="figure-dialog" type="button" aria-label="Chiudi immagine">Chiudi ×</button><img id="figure-large" alt=""></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script id="source-data" type="application/json">@@SOURCES@@</script>
+<script>@@SCRIPT@@</script>
+</body></html>

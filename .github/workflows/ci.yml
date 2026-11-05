@@ -1,0 +1,61 @@
+name: Verifiche
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: Rust — test e compilazione
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Toolchain stabile
+        run: rustup toolchain install stable --profile minimal
+      - name: Test senza hardware
+        run: cargo +stable test --locked
+      - name: Compilazione release
+        run: cargo +stable build --release --locked
+
+  python:
+    name: Python — voce e installer
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - run: python -m unittest discover -s voice -p 'test_*.py' -v
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+  manuale:
+    name: Manuale — coerenza e browser offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Rigenera senza dipendenze esterne
+        run: python scripts/genera-manuale.py
+      - name: Il manuale deve corrispondere ai sorgenti
+        run: git diff --exit-code -- docs/manuale-software.html
+      - run: node --check scripts/manuale/interazioni.js
+      - name: Prepara browser di verifica
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m playwright install --with-deps chromium
+      - name: Navigazione locale, sorgenti, figure e layout mobile
+        run: python scripts/verifica-manuale.py
